@@ -1,71 +1,783 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title>3Soul</title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2299">
-  <style type="text/css">
-    body {background-color: #f2ece6}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 9.8px Helvetica; color: #665b55; -webkit-text-stroke: #665b55}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 9.4px Helvetica; color: #665b55; -webkit-text-stroke: #665b55}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.0px Helvetica; color: #665b55; -webkit-text-stroke: #665b55}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 15.6px 'Apple Color Emoji'; color: #2e2824; -webkit-text-stroke: #2e2824}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.2px Helvetica; color: #2e2824; -webkit-text-stroke: #2e2824; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.6)}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 9.4px Helvetica; color: #665b55; -webkit-text-stroke: #665b55; min-height: 11.0px}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 9.6px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #6a8980}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 9.6px Helvetica; color: #665b55; -webkit-text-stroke: #665b55}
-    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 9.6px Helvetica; color: #6a8980; -webkit-text-stroke: #6a8980}
-    p.p11 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 20.4px; font: 12.0px Times; color: #2e2824; -webkit-text-stroke: #2e2824}
-    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 9.4px Helvetica; color: #665b55; -webkit-text-stroke: #665b55; min-height: 11.0px}
-    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 16.4px; font: 10.6px Times; color: #2e2824; -webkit-text-stroke: #2e2824; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.5)}
-    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.2px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #6a8980}
-    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 10.2px 'Lucida Grande'; color: #6a8980; -webkit-text-stroke: #6a8980}
-    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.2px Helvetica; color: #6a8980; -webkit-text-stroke: #6a8980; background-color: #ffffff; background-color: rgba(255, 255, 255, 0.6)}
-    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 14.0px; font: 9.4px Helvetica; color: #665b55; -webkit-text-stroke: #665b55; min-height: 11.0px}
-    span.s1 {font-kerning: none}
-    span.s2 {font-kerning: none; background-color: rgba(255, 255, 255, 0.6)}
-    span.s3 {font: 12.0px Helvetica; font-kerning: none; color: #2e2824; -webkit-text-stroke: 0px #2e2824}
-    span.s4 {font: 9.6px 'Apple Color Emoji'; font-kerning: none}
-    span.s5 {font: 9.6px 'Apple Color Emoji'; font-kerning: none; background-color: rgba(255, 255, 255, 0.6)}
-    span.s6 {font: 9.6px Menlo; font-kerning: none; background-color: rgba(255, 255, 255, 0.6)}
-    span.s7 {font: 10.6px 'Apple Color Emoji'; font-kerning: none}
-    span.s8 {font: 10.2px 'Apple Color Emoji'; font-kerning: none}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3Soul — Your Wellbeing Companion</title>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dawn-bg: #1a0a2e; --dawn-accent: #ff6b9d; --dawn-text: #f8e8ff; --dawn-card: rgba(255,107,157,0.08);
+    --morning-bg: #0d1b2a; --morning-accent: #ffd93d; --morning-text: #fff8e7; --morning-card: rgba(255,217,61,0.08);
+    --midday-bg: #0a1628; --midday-accent: #4ecdc4; --midday-text: #e8f8f7; --midday-card: rgba(78,205,196,0.08);
+    --afternoon-bg: #1a1a2e; --afternoon-accent: #a8edea; --afternoon-text: #e8f4f8; --afternoon-card: rgba(168,237,234,0.08);
+    --evening-bg: #16213e; --evening-accent: #f7971e; --evening-text: #fff3e0; --evening-card: rgba(247,151,30,0.08);
+    --dusk-bg: #0f0c29; --dusk-accent: #fc5c7d; --dusk-text: #ffe0ea; --dusk-card: rgba(252,92,125,0.08);
+    --night-bg: #050510; --night-accent: #818cf8; --night-text: #e0e7ff; --night-card: rgba(129,140,248,0.08);
+    --bg: var(--night-bg); --accent: var(--night-accent); --text: var(--night-text); --card: var(--night-card);
+    --font-ui: 'Quicksand', sans-serif;
+    --font-ai: 'Lora', serif;
+    --radius: 16px;
+    --transition: 0.6s cubic-bezier(0.4,0,0.2,1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-ui);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background var(--transition), color var(--transition);
+    overflow-x: hidden;
+  }
+  /* API Key overlay */
+  #api-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(5,5,16,0.96);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  #api-overlay.hidden { display: none; }
+  .api-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 480px; width: 100%;
+    text-align: center;
+  }
+  .api-box h2 { font-family: var(--font-ai); font-style: italic; font-size: 1.8rem; margin-bottom: 12px; color: #a78bfa; }
+  .api-box p { font-size: 0.9rem; opacity: 0.7; margin-bottom: 24px; line-height: 1.6; }
+  .api-box input {
+    width: 100%; padding: 14px 18px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    color: #fff; font-family: var(--font-ui); font-size: 0.9rem;
+    outline: none; margin-bottom: 16px;
+  }
+  .api-box input:focus { border-color: #a78bfa; }
+  .api-box button {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, #a78bfa, #818cf8);
+    border: none; border-radius: 12px;
+    color: #fff; font-family: var(--font-ui); font-size: 1rem; font-weight: 600;
+    cursor: pointer; transition: opacity 0.2s;
+  }
+  .api-box button:hover { opacity: 0.85; }
+  .api-box .hint { font-size: 0.78rem; opacity: 0.5; margin-top: 14px; }
+  .api-box .hint a { color: #a78bfa; text-decoration: none; }
+
+  /* Header */
+  header {
+    padding: 24px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(0,0,0,0.2);
+  }
+  .logo { font-family: var(--font-ai); font-style: italic; font-size: 1.6rem; color: var(--accent); transition: color var(--transition); }
+  .time-info { font-size: 0.8rem; opacity: 0.5; text-align: right; }
+  #clock { font-weight: 600; font-size: 0.95rem; opacity: 0.8; }
+  .palette-indicator {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); display: inline-block;
+    margin-right: 6px; transition: background var(--transition);
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* Main layout */
+  main { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+  /* Greeting */
+  .greeting {
+    text-align: center; margin-bottom: 48px;
+  }
+  .greeting h1 {
+    font-family: var(--font-ai); font-style: italic;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    color: var(--accent); margin-bottom: 12px;
+    transition: color var(--transition);
+  }
+  .greeting p { opacity: 0.6; font-size: 0.95rem; }
+
+  /* Mood check-in */
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 24px;
+    transition: background var(--transition);
+  }
+  .card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 18px; opacity: 0.8; letter-spacing: 0.05em; text-transform: uppercase; font-size: 0.8rem; }
+  .mood-grid { display: flex; gap: 10px; flex-wrap: wrap; }
+  .mood-btn {
+    padding: 10px 18px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 100px;
+    background: transparent;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 0.88rem;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .mood-btn:hover, .mood-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #000;
+    font-weight: 600;
+  }
+  .mood-history { margin-top: 16px; font-size: 0.8rem; opacity: 0.5; }
+
+  /* Chat section */
+  .chat-messages {
+    min-height: 120px;
+    max-height: 380px;
+    overflow-y: auto;
+    margin-bottom: 16px;
+    padding-right: 8px;
+  }
+  .chat-messages::-webkit-scrollbar { width: 4px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+  .msg { margin-bottom: 16px; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+  .msg.user { text-align: right; }
+  .msg.user span {
+    display: inline-block;
+    background: var(--accent);
+    color: #000;
+    padding: 10px 16px;
+    border-radius: 18px 18px 4px 18px;
+    font-size: 0.9rem; font-weight: 500;
+    max-width: 80%;
+  }
+  .msg.ai span {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 12px 18px;
+    border-radius: 4px 18px 18px 18px;
+    font-family: var(--font-ai);
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    max-width: 88%;
+    color: var(--text);
+  }
+  .msg.ai.loading span { opacity: 0.5; }
+  .chat-input-row { display: flex; gap: 10px; }
+  .chat-input {
+    flex: 1; padding: 13px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    color: var(--text);
+    font-family: var(--font-ui); font-size: 0.92rem;
+    outline: none; transition: border-color 0.2s;
+  }
+  .chat-input:focus { border-color: var(--accent); }
+  .chat-input::placeholder { opacity: 0.4; }
+  .send-btn {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: opacity 0.2s, transform 0.2s;
+    color: #000; font-size: 1.1rem;
+  }
+  .send-btn:hover { opacity: 0.8; transform: scale(1.05); }
+  .send-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none; }
+
+  /* Research helper */
+  .research-input { width: 100%; padding: 13px 18px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; color: var(--text); font-family: var(--font-ui); font-size: 0.92rem; outline: none; margin-bottom: 12px; resize: vertical; min-height: 80px; }
+  .research-input:focus { border-color: var(--accent); }
+  .action-btn {
+    padding: 11px 22px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 100px;
+    color: var(--accent);
+    font-family: var(--font-ui); font-size: 0.88rem; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .action-btn:hover { background: var(--accent); color: #000; }
+  .action-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+  .result-box {
+    margin-top: 16px;
+    padding: 18px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    font-family: var(--font-ai);
+    font-style: italic;
+    font-size: 0.93rem;
+    line-height: 1.75;
+    white-space: pre-wrap;
+    display: none;
+  }
+  .result-box.visible { display: block; animation: fadeUp 0.3s ease; }
+
+  /* Life admin */
+  .task-input-row { display: flex; gap: 10px; margin-bottom: 16px; }
+  .task-input {
+    flex: 1; padding: 12px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px;
+    color: var(--text); font-family: var(--font-ui); font-size: 0.9rem;
+    outline: none;
+  }
+  .task-input:focus { border-color: var(--accent); }
+  .add-btn {
+    padding: 12px 20px;
+    background: var(--accent); border: none; border-radius: 100px;
+    color: #000; font-family: var(--font-ui); font-weight: 700;
+    cursor: pointer; font-size: 1.1rem; transition: opacity 0.2s;
+  }
+  .add-btn:hover { opacity: 0.8; }
+  .task-list { list-style: none; }
+  .task-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    animation: fadeUp 0.2s ease;
+  }
+  .task-check {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: transparent; cursor: pointer;
+    transition: all 0.2s; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .task-check.done { background: var(--accent); border-color: var(--accent); }
+  .task-check.done::after { content: '✓'; color: #000; font-size: 0.7rem; font-weight: 700; }
+  .task-text { flex: 1; font-size: 0.92rem; }
+  .task-text.done { opacity: 0.4; text-decoration: line-through; }
+  .task-del { background: none; border: none; color: rgba(255,255,255,0.25); cursor: pointer; font-size: 1rem; padding: 4px; transition: color 0.2s; }
+  .task-del:hover { color: #fc5c7d; }
+
+  /* Astrology */
+  .astro-toggle {
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none;
+  }
+  .astro-toggle h2 { margin-bottom: 0; }
+  .astro-toggle .chevron { transition: transform 0.3s; opacity: 0.5; font-size: 0.8rem; }
+  .astro-toggle .chevron.open { transform: rotate(180deg); }
+  .astro-body { margin-top: 20px; display: none; }
+  .astro-body.open { display: block; }
+  .astro-reading {
+    font-family: var(--font-ai); font-style: italic;
+    font-size: 0.95rem; line-height: 1.8; opacity: 0.85; margin-bottom: 20px;
+  }
+  .energy-bars { margin-bottom: 20px; }
+  .energy-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .energy-label { font-size: 0.8rem; width: 90px; opacity: 0.6; }
+  .energy-track { flex: 1; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .energy-fill { height: 100%; border-radius: 2px; background: var(--accent); transition: width 1s cubic-bezier(0.4,0,0.2,1), background var(--transition); }
+  .moon-phase { text-align: center; padding: 20px; }
+  .moon-emoji { font-size: 2.5rem; }
+  .moon-label { font-size: 0.8rem; opacity: 0.5; margin-top: 6px; }
+  .affirmation {
+    text-align: center; padding: 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    font-family: var(--font-ai); font-style: italic;
+    font-size: 0.95rem; line-height: 1.7; opacity: 0.8;
+  }
+
+  /* Colour psychology */
+  .colour-info { font-size: 0.85rem; line-height: 1.7; opacity: 0.7; }
+  .colour-name { font-weight: 700; color: var(--accent); transition: color var(--transition); font-size: 1rem; }
+
+  /* Settings */
+  .settings-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.88rem; }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-label { opacity: 0.7; }
+  .settings-val { opacity: 0.5; font-size: 0.8rem; font-family: monospace; }
+  .change-key-btn { padding: 6px 14px; background: transparent; border: 1px solid rgba(255,255,255,0.15); border-radius: 100px; color: var(--text); font-family: var(--font-ui); font-size: 0.78rem; cursor: pointer; transition: all 0.2s; }
+  .change-key-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* Section nav */
+  .section-nav {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    position: sticky; top: 73px; z-index: 50;
+    padding: 12px 0;
+    backdrop-filter: blur(20px);
+  }
+  .nav-btn {
+    padding: 8px 18px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    color: var(--text);
+    font-family: var(--font-ui); font-size: 0.82rem;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .nav-btn.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 600; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Season badge */
+  .season-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 14px; border-radius: 100px;
+    background: rgba(255,255,255,0.06);
+    font-size: 0.78rem; opacity: 0.7; margin-bottom: 16px;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    main { padding: 24px 16px; }
+    .api-box { padding: 28px 20px; }
+  }
+</style>
 </head>
 <body>
-<h1 style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 28.8px Times; color: #6a8980; -webkit-text-stroke: #6a8980"><span class="s1"><b><i>3Soul</i></b></span></h1>
-<p class="p2"><span class="s1">EMOTIONAL · RESEARCH · LIFE</span></p>
-<p class="p3"><span class="s2">Good morning</span><span class="s3"><span class="Apple-converted-space"> </span></span></p>
-<p class="p4"><span class="s2">HOW ARE YOU FEELING RIGHT NOW?</span></p>
-<p class="p5"><span class="s2">🌊</span></p>
-<p class="p6"><span class="s1">Flowing</span></p>
-<p class="p5"><span class="s2">☁️</span></p>
-<p class="p6"><span class="s1">Heavy</span></p>
-<p class="p5"><span class="s2">✨</span></p>
-<p class="p6"><span class="s1">Bright</span></p>
-<p class="p5"><span class="s2">🌿</span></p>
-<p class="p6"><span class="s1">Calm</span></p>
-<p class="p5"><span class="s2">🔥</span></p>
-<p class="p6"><span class="s1">Restless</span></p>
-<p class="p7"><span class="s1"></span><br></p>
-<p class="p8"><span class="s4">💙</span><span class="s1"><b> Emotional</b></span></p>
-<p class="p9"><span class="s5">🔍</span><span class="s2"><b> Research</b></span></p>
-<p class="p9"><span class="s5">✅</span><span class="s2"><b> Life Admin</b></span></p>
-<p class="p4"><span class="s2">QUOTE OF THE MOMENT</span></p>
-<p class="p10"><span class="s5">☀️</span><span class="s2"> Sunny</span></p>
-<p class="p9"><span class="s5">⛅</span><span class="s2"> Cloudy</span></p>
-<p class="p9"><span class="s5">🌧️</span><span class="s2"> Rainy</span></p>
-<p class="p11"><span class="s2"><i>Loading your moment…</i></span></p>
-<p class="p12"><span class="s1"></span><br></p>
-<p class="p10"><span class="s6">↻</span><span class="s2"> New quote</span></p>
-<p class="p4"><span class="s2">TALK IT THROUGH</span></p>
-<p class="p13"><span class="s1"><i>Hey Dan </i></span><span class="s7">🌊</span><span class="s1"><i> I'm here. What's on your mind today?</i></span></p>
-<p class="p14"><span class="s1">→</span></p>
-<p class="p15"><span class="s2"><b>▶</b></span></p>
-<p class="p16"><span class="s8">♓</span><span class="s1"><b> Your Pisces Energy Today<span class="Apple-converted-space"> </span></b></span></p>
-<p class="p4"><span class="s2">COLOUR PSYCHOLOGY · TODAY'S PALETTE</span></p>
-<p class="p17"><span class="s1"></span><br></p>
+
+<!-- API Key Overlay -->
+<div id="api-overlay">
+  <div class="api-box">
+    <h2>Welcome to 3Soul</h2>
+    <p>To power the AI features, please enter your Anthropic API key. It's stored only in your browser and never shared.</p>
+    <input type="password" id="api-key-input" placeholder="sk-ant-..." autocomplete="off">
+    <button onclick="saveApiKey()">Start my journey ✦</button>
+    <p class="hint">Get your key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Stored locally, never sent anywhere except Anthropic</p>
+  </div>
+</div>
+
+<!-- Header -->
+<header>
+  <div class="logo">3Soul</div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="time-info">
+      <div><span class="palette-indicator" id="palette-dot"></span><span id="palette-name">Loading...</span></div>
+      <div id="clock"></div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Greeting -->
+  <div class="greeting">
+    <h1 id="greeting-text">Good evening, soul</h1>
+    <p id="greeting-sub">Take a breath. You're here now.</p>
+    <div style="margin-top:12px;">
+      <span class="season-badge" id="season-badge">🌸 Spring</span>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="section-nav">
+    <button class="nav-btn active" onclick="showSection('mood')">Mood</button>
+    <button class="nav-btn" onclick="showSection('support')">Talk it through</button>
+    <button class="nav-btn" onclick="showSection('research')">Research helper</button>
+    <button class="nav-btn" onclick="showSection('tasks')">Life admin</button>
+    <button class="nav-btn" onclick="showSection('astro')">Astrology</button>
+    <button class="nav-btn" onclick="showSection('colour')">Colour psychology</button>
+    <button class="nav-btn" onclick="showSection('settings')">Settings</button>
+  </div>
+
+  <!-- Mood Section -->
+  <div id="section-mood" class="section active">
+    <div class="card">
+      <h2>How are you feeling right now?</h2>
+      <div class="mood-grid">
+        <button class="mood-btn" onclick="logMood(this,'😌 Calm')">😌 Calm</button>
+        <button class="mood-btn" onclick="logMood(this,'😊 Happy')">😊 Happy</button>
+        <button class="mood-btn" onclick="logMood(this,'😔 Low')">😔 Low</button>
+        <button class="mood-btn" onclick="logMood(this,'😤 Anxious')">😤 Anxious</button>
+        <button class="mood-btn" onclick="logMood(this,'😴 Tired')">😴 Tired</button>
+        <button class="mood-btn" onclick="logMood(this,'🔥 Motivated')">🔥 Motivated</button>
+        <button class="mood-btn" onclick="logMood(this,'😐 Numb')">😐 Numb</button>
+        <button class="mood-btn" onclick="logMood(this,'🥲 Overwhelmed')">🥲 Overwhelmed</button>
+        <button class="mood-btn" onclick="logMood(this,'💫 Hopeful')">💫 Hopeful</button>
+      </div>
+      <div class="mood-history" id="mood-history"></div>
+    </div>
+  </div>
+
+  <!-- Support / Talk it through -->
+  <div id="section-support" class="section">
+    <div class="card">
+      <h2>Talk it through</h2>
+      <div class="chat-messages" id="chat-messages">
+        <div class="msg ai"><span>I'm here with you. What's on your mind today?</span></div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chat-input" placeholder="Share what's on your mind..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="send-btn" id="send-btn" onclick="sendChat()">→</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Research Helper -->
+  <div id="section-research" class="section">
+    <div class="card">
+      <h2>Research helper</h2>
+      <textarea class="research-input" id="research-input" placeholder="What would you like me to research or explain for you?"></textarea>
+      <button class="action-btn" id="research-btn" onclick="doResearch()">Research this</button>
+      <div class="result-box" id="research-result"></div>
+    </div>
+  </div>
+
+  <!-- Life Admin -->
+  <div id="section-tasks" class="section">
+    <div class="card">
+      <h2>Life admin</h2>
+      <div class="task-input-row">
+        <input class="task-input" id="task-input" placeholder="Add a task..." onkeydown="if(event.key==='Enter')addTask()">
+        <button class="add-btn" onclick="addTask()">+</button>
+      </div>
+      <ul class="task-list" id="task-list"></ul>
+    </div>
+  </div>
+
+  <!-- Astrology -->
+  <div id="section-astro" class="section">
+    <div class="card">
+      <div class="astro-toggle" onclick="toggleAstro()">
+        <h2>✦ Pisces daily energy</h2>
+        <span class="chevron" id="astro-chevron">▼</span>
+      </div>
+      <div class="astro-body" id="astro-body">
+        <div class="moon-phase">
+          <div class="moon-emoji" id="moon-emoji">🌙</div>
+          <div class="moon-label" id="moon-label">Waning Crescent</div>
+        </div>
+        <div class="astro-reading" id="astro-reading">
+          As a Pisces, today's energy invites you inward. Neptune's gentle influence encourages creative reflection — trust what rises from the depths of your imagination. You may feel more sensitive than usual, and that's your gift, not your weakness. Lean into compassion, both for others and for yourself.
+        </div>
+        <div class="energy-bars">
+          <div class="energy-row">
+            <span class="energy-label">Emotional</span>
+            <div class="energy-track"><div class="energy-fill" style="width:78%"></div></div>
+          </div>
+          <div class="energy-row">
+            <span class="energy-label">Creative</span>
+            <div class="energy-track"><div class="energy-fill" style="width:85%"></div></div>
+          </div>
+          <div class="energy-row">
+            <span class="energy-label">Physical</span>
+            <div class="energy-track"><div class="energy-fill" style="width:52%"></div></div>
+          </div>
+          <div class="energy-row">
+            <span class="energy-label">Intuitive</span>
+            <div class="energy-track"><div class="energy-fill" style="width:92%"></div></div>
+          </div>
+          <div class="energy-row">
+            <span class="energy-label">Social</span>
+            <div class="energy-track"><div class="energy-fill" style="width:45%"></div></div>
+          </div>
+        </div>
+        <div class="affirmation" id="affirmation">
+          "I trust my sensitivity as a strength. My depth of feeling connects me to what truly matters."
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Colour Psychology -->
+  <div id="section-colour" class="section">
+    <div class="card">
+      <h2>Colour psychology</h2>
+      <p class="colour-name" id="colour-palette-name">Night palette</p>
+      <br>
+      <p class="colour-info" id="colour-info">
+        The deep indigo and violet tones of night carry the psychology of introspection and mystery. Indigo encourages deep thinking and the quieting of an overactive mind — it slows mental chatter and invites contemplative calm. Violet connects to imagination and spiritual awareness, gently reminding you that rest is productive too. This palette is designed to ease your nervous system into stillness.
+      </p>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div id="section-settings" class="section">
+    <div class="card">
+      <h2>Settings</h2>
+      <div class="settings-row">
+        <span class="settings-label">API Key</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="settings-val" id="key-display">sk-ant-...****</span>
+          <button class="change-key-btn" onclick="changeApiKey()">Change</button>
+        </div>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Current palette</span>
+        <span class="settings-val" id="settings-palette">Night</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Season</span>
+        <span class="settings-val" id="settings-season">Spring</span>
+      </div>
+      <div class="settings-row">
+        <span class="settings-label">Star sign</span>
+        <span class="settings-val">Pisces ♓</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// ─── API Key ───────────────────────────────────────────────────────────────
+let API_KEY = localStorage.getItem('3soul_api_key') || '';
+
+function saveApiKey() {
+  const val = document.getElementById('api-key-input').value.trim();
+  if (!val.startsWith('sk-')) return alert('Please enter a valid Anthropic API key (starts with sk-)');
+  API_KEY = val;
+  localStorage.setItem('3soul_api_key', val);
+  document.getElementById('api-overlay').classList.add('hidden');
+  updateKeyDisplay();
+}
+
+function changeApiKey() {
+  document.getElementById('api-key-input').value = '';
+  document.getElementById('api-overlay').classList.remove('hidden');
+}
+
+function updateKeyDisplay() {
+  if (API_KEY) {
+    const masked = API_KEY.substring(0, 10) + '...' + API_KEY.slice(-4);
+    document.getElementById('key-display').textContent = masked;
+  }
+}
+
+if (API_KEY) {
+  document.getElementById('api-overlay').classList.add('hidden');
+  updateKeyDisplay();
+}
+
+// ─── Palette System ────────────────────────────────────────────────────────
+const palettes = {
+  dawn:      { name:'Dawn',      hours:[5,7],  bg:'#1a0a2e', accent:'#ff6b9d', text:'#f8e8ff', card:'rgba(255,107,157,0.08)', emoji:'🌅', colour:'Rose and violet tones at dawn carry the energy of new beginnings. Pink stimulates gentle optimism while deep violet eases you from dream to wakefulness. This palette says: today is unwritten.' },
+  morning:   { name:'Morning',   hours:[7,11], bg:'#0d1b2a', accent:'#ffd93d', text:'#fff8e7', card:'rgba(255,217,61,0.08)',  emoji:'☀️', colour:'Golden yellow is the colour of mental clarity and focused energy. It activates the mind without overstimulating — the psychology of a bright morning that invites possibility and productive thought.' },
+  midday:    { name:'Midday',    hours:[11,14],bg:'#0a1628', accent:'#4ecdc4', text:'#e8f8f7', card:'rgba(78,205,196,0.08)',  emoji:'🌿', colour:'Teal at midday balances the analytical with the intuitive. It reduces decision fatigue and promotes clear communication — ideal for the peak hours when you need both head and heart.' },
+  afternoon: { name:'Afternoon', hours:[14,17],bg:'#1a1a2e', accent:'#a8edea', text:'#e8f4f8', card:'rgba(168,237,234,0.08)', emoji:'🌤', colour:'Soft aqua carries the psychology of gentle focus. As the day matures, this cool tone prevents afternoon overwhelm and keeps you grounded without dulling your edge.' },
+  evening:   { name:'Evening',   hours:[17,20],bg:'#16213e', accent:'#f7971e', text:'#fff3e0', card:'rgba(247,151,30,0.08)',  emoji:'🌇', colour:'Amber and orange are the colours of warmth and social connection. They stimulate conversation and creativity while gently signalling to your body that the pace of the day is shifting.' },
+  dusk:      { name:'Dusk',      hours:[20,22],bg:'#0f0c29', accent:'#fc5c7d', text:'#ffe0ea', card:'rgba(252,92,125,0.08)',  emoji:'🌆', colour:'Rose-pink at dusk encourages emotional release and reflection. It gently lowers cortisol and invites you to process the day with compassion rather than criticism.' },
+  night:     { name:'Night',     hours:[22,5], bg:'#050510', accent:'#818cf8', text:'#e0e7ff', card:'rgba(129,140,248,0.08)', emoji:'🌙', colour:'Deep indigo and violet tones carry the psychology of introspection and mystery. Indigo slows mental chatter and invites contemplative calm. Violet connects to imagination and spiritual awareness, gently reminding you that rest is productive too.' }
+};
+
+function getCurrentPalette() {
+  const h = new Date().getHours();
+  for (const [key, p] of Object.entries(palettes)) {
+    const [s, e] = p.hours;
+    if (s < e ? (h >= s && h < e) : (h >= s || h < e)) return { key, ...p };
+  }
+  return { key:'night', ...palettes.night };
+}
+
+function applyPalette(p) {
+  const r = document.documentElement.style;
+  r.setProperty('--bg', p.bg);
+  r.setProperty('--accent', p.accent);
+  r.setProperty('--text', p.text);
+  r.setProperty('--card', p.card);
+  document.getElementById('palette-name').textContent = p.name;
+  document.getElementById('palette-dot').style.background = p.accent;
+  document.getElementById('palette-dot').style.boxShadow = `0 0 8px ${p.accent}`;
+  document.getElementById('colour-palette-name').textContent = p.name + ' palette';
+  document.getElementById('colour-info').textContent = p.colour;
+  document.getElementById('settings-palette').textContent = p.name;
+
+  // Greeting
+  const h = new Date().getHours();
+  let gText = h < 12 ? 'Good morning, soul' : h < 17 ? 'Good afternoon, soul' : h < 21 ? 'Good evening, soul' : 'Good night, soul';
+  document.getElementById('greeting-text').textContent = gText;
+}
+
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent = now.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'});
+  const p = getCurrentPalette();
+  applyPalette(p);
+}
+
+// Season
+function getSeason() {
+  const m = new Date().getMonth();
+  if (m >= 2 && m <= 4) return { name:'Spring', emoji:'🌸' };
+  if (m >= 5 && m <= 7) return { name:'Summer', emoji:'☀️' };
+  if (m >= 8 && m <= 10) return { name:'Autumn', emoji:'🍂' };
+  return { name:'Winter', emoji:'❄️' };
+}
+
+const season = getSeason();
+document.getElementById('season-badge').textContent = season.emoji + ' ' + season.name;
+document.getElementById('settings-season').textContent = season.name;
+
+updateClock();
+setInterval(updateClock, 30000);
+
+// ─── Section Nav ───────────────────────────────────────────────────────────
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ─── Mood ──────────────────────────────────────────────────────────────────
+let moodHistory = JSON.parse(localStorage.getItem('3soul_moods') || '[]');
+
+function logMood(btn, mood) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const entry = { mood, time: new Date().toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'}), date: new Date().toLocaleDateString('en-GB') };
+  moodHistory.unshift(entry);
+  if (moodHistory.length > 20) moodHistory.pop();
+  localStorage.setItem('3soul_moods', JSON.stringify(moodHistory));
+  renderMoodHistory();
+}
+
+function renderMoodHistory() {
+  const el = document.getElementById('mood-history');
+  if (!moodHistory.length) { el.textContent = ''; return; }
+  const recent = moodHistory.slice(0, 5).map(m => `${m.mood} at ${m.time}`).join(' · ');
+  el.textContent = 'Recent: ' + recent;
+}
+renderMoodHistory();
+
+// ─── Chat ──────────────────────────────────────────────────────────────────
+let chatHistory = [{ role:'assistant', content:"I'm here with you. What's on your mind today?" }];
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg || !API_KEY) return;
+  input.value = '';
+  const btn = document.getElementById('send-btn');
+  btn.disabled = true;
+
+  appendMsg('user', msg);
+  chatHistory.push({ role:'user', content: msg });
+
+  const loadingEl = appendMsg('ai', '...', true);
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'x-api-key': API_KEY, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:600,
+        system:`You are the emotional support companion inside 3Soul, a personal wellbeing app. The user is a Pisces born 15 March 2000, currently in the UK. Be warm, gentle, and present. Respond with empathy and depth. Keep responses concise but meaningful — 2-4 sentences usually. Never give clinical advice. Current time palette: ${getCurrentPalette().name}. Current season: ${season.name}.`,
+        messages: chatHistory.filter(m => m.role !== 'assistant' || m !== chatHistory[0])
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Something went quiet — please try again.';
+    loadingEl.querySelector('span').textContent = reply;
+    loadingEl.classList.remove('loading');
+    chatHistory.push({ role:'assistant', content: reply });
+  } catch(e) {
+    loadingEl.querySelector('span').textContent = 'Something went quiet on my end — please try again.';
+    loadingEl.classList.remove('loading');
+  }
+  btn.disabled = false;
+}
+
+function appendMsg(role, text, loading=false) {
+  const box = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg ' + role + (loading ? ' loading' : '');
+  div.innerHTML = `<span>${text}</span>`;
+  box.appendChild(div);
+  box.scrollTop = box.scrollHeight;
+  return div;
+}
+
+// ─── Research ──────────────────────────────────────────────────────────────
+async function doResearch() {
+  const query = document.getElementById('research-input').value.trim();
+  if (!query || !API_KEY) return;
+  const btn = document.getElementById('research-btn');
+  const result = document.getElementById('research-result');
+  btn.disabled = true;
+  btn.textContent = 'Researching...';
+  result.textContent = '';
+  result.classList.add('visible');
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json', 'x-api-key': API_KEY, 'anthropic-version':'2023-06-01', 'anthropic-dangerous-direct-browser-access':'true' },
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:800,
+        system:`You are a thoughtful research assistant inside 3Soul, a wellbeing app. The user is based in the UK. Provide clear, helpful, well-structured responses. Be informative but warm. Where relevant to wellbeing topics, be sensitive and thorough.`,
+        messages:[{ role:'user', content: query }]
+      })
+    });
+    const data = await res.json();
+    result.textContent = data.content?.[0]?.text || 'Nothing came through — please try again.';
+  } catch(e) {
+    result.textContent = 'Something went wrong. Please check your connection and try again.';
+  }
+  btn.disabled = false;
+  btn.textContent = 'Research this';
+}
+
+// ─── Tasks ─────────────────────────────────────────────────────────────────
+let tasks = JSON.parse(localStorage.getItem('3soul_tasks') || '[]');
+
+function saveTasks() { localStorage.setItem('3soul_tasks', JSON.stringify(tasks)); }
+
+function addTask() {
+  const input = document.getElementById('task-input');
+  const text = input.value.trim();
+  if (!text) return;
+  tasks.push({ text, done: false, id: Date.now() });
+  input.value = '';
+  saveTasks(); renderTasks();
+}
+
+function toggleTask(id) {
+  const t = tasks.find(t => t.id === id);
+  if (t) { t.done = !t.done; saveTasks(); renderTasks(); }
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  saveTasks(); renderTasks();
+}
+
+function renderTasks() {
+  const list = document.getElementById('task-list');
+  list.innerHTML = '';
+  tasks.forEach(t => {
+    const li = document.createElement('li');
+    li.className = 'task-item';
+    li.innerHTML = `
+      <div class="task-check ${t.done?'done':''}" onclick="toggleTask(${t.id})"></div>
+      <span class="task-text ${t.done?'done':''}">${t.text}</span>
+      <button class="task-del" onclick="deleteTask(${t.id})">✕</button>
+    `;
+    list.appendChild(li);
+  });
+}
+renderTasks();
+
+// ─── Astrology ─────────────────────────────────────────────────────────────
+function toggleAstro() {
+  const body = document.getElementById('astro-body');
+  const chevron = document.getElementById('astro-chevron');
+  body.classList.toggle('open');
+  chevron.classList.toggle('open');
+}
+
+// Moon phase (simplified calculation)
+function getMoonPhase() {
+  const phases = ['🌑 New Moon','🌒 Waxing Crescent','🌓 First Quarter','🌔 Waxing Gibbous','🌕 Full Moon','🌖 Waning Gibbous','🌗 Last Quarter','🌘 Waning Crescent'];
+  const day = Math.floor((Date.now() / 86400000 - 10) % 29.53);
+  const idx = Math.floor(day / 3.69);
+  return phases[Math.min(idx, 7)];
+}
+const moonPhase = getMoonPhase();
+document.getElementById('moon-emoji').textContent = moonPhase.split(' ')[0];
+document.getElementById('moon-label').textContent = moonPhase.substring(moonPhase.indexOf(' ')+1);
+</script>
 </body>
 </html>
