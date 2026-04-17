@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3Soul · Daily Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --flame: #E8541A;
+    --gold: #D4A017;
+    --pale: #F5E4A0;
+    --ember: #C43A0A;
+    --deep: #0A0400;
+    --dark: #160800;
+    --surface: #1E0C02;
+    --surface2: #2A1208;
+    --surface3: #331808;
+    --text: #F0D8B0;
+    --text2: #B89060;
+    --text3: #7A5838;
+    --border: rgba(212,160,23,0.15);
+    --border2: rgba(212,160,23,0.3);
+    --green: #4CAF50;
+    --red: #E53935;
+    --blue: #64B5F6;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--deep);
+    color: var(--text);
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .app-header {
+    background: var(--dark);
+    border-bottom: 1px solid var(--border2);
+    padding: 14px 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .logo-svg { width: 28px; height: 28px; }
+  .logo-name {
+    font-family: 'Cinzel', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.05em;
+  }
+  .logo-tagline {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-left: auto;
+  }
+  .date-pill {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--text3);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 10px;
+  }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .tab-bar::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: none;
+    background: none;
+    border: none;
+    color: var(--text3);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+  .tab-btn:hover { color: var(--text2); }
+  .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* PANELS */
+  .panel { display: none; padding: 20px; max-width: 700px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 14px;
+  }
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* MANTRA TRACKER */
+  .mantra-grid { display: flex; flex-direction: column; gap: 12px; }
+  .mantra-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .mantra-name {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text);
+  }
+  .mantra-sub { font-size: 11px; color: var(--text3); font-style: italic; }
+  .mantra-counter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cnt-btn {
+    width: 28px; height: 28px;
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    border-radius: 6px;
+    color: var(--gold);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s;
+  }
+  .cnt-btn:hover { background: var(--surface3); }
+  .cnt-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--pale);
+    min-width: 36px;
+    text-align: center;
+  }
+  .cnt-target { font-size: 10px; color: var(--text3); }
+  .progress-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--surface2);
+    border-radius: 2px;
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--ember), var(--gold));
+    border-radius: 2px;
+    transition: width 0.3s;
+  }
+  .complete-badge {
+    font-size: 10px;
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .complete-badge.show { opacity: 1; }
+
+  /* HORA TABLE */
+  .hora-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .hora-table th {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--text3);
+    padding: 6px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .hora-table td { padding: 7px 8px; border-bottom: 1px solid rgba(212,160,23,0.06); }
+  .hora-table tr.current-hora { background: rgba(212,160,23,0.08); }
+  .hora-table tr.current-hora td { color: var(--pale); }
+  .planet-dot {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+
+  /* GOLD LEVELS */
+  .gold-ladder { position: relative; }
+  .gold-level {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(212,160,23,0.06);
+  }
+  .gold-level:last-child { border-bottom: none; }
+  .level-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    min-width: 80px;
+  }
+  .level-label { font-size: 13px; color: var(--text2); flex: 1; }
+  .level-action {
+    font-size: 11px;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.06em;
+    padding: 3px 10px;
+    border-radius: 20px;
+    border: 1px solid;
+  }
+  .action-buy { color: var(--green); border-color: rgba(76,175,80,0.4); background: rgba(76,175,80,0.08); }
+  .action-sell { color: var(--red); border-color: rgba(229,57,53,0.4); background: rgba(229,57,53,0.08); }
+  .action-watch { color: var(--gold); border-color: var(--border2); background: rgba(212,160,23,0.06); }
+  .action-danger { color: #FF7043; border-color: rgba(255,112,67,0.4); background: rgba(255,112,67,0.08); }
+  .current-price-indicator {
+    font-size: 10px;
+    color: var(--flame);
+    font-family: 'JetBrains Mono', monospace;
+    margin-left: 4px;
+  }
+
+  /* TRADE JOURNAL */
+  .journal-form { display: flex; flex-direction: column; gap: 10px; }
+  .j-row { display: flex; gap: 10px; }
+  .j-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .j-label { font-size: 11px; color: var(--text3); font-family: 'Cinzel', serif; letter-spacing: 0.08em; text-transform: uppercase; }
+  .j-input, .j-select, .j-textarea {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 14px;
+    padding: 8px 12px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .j-input:focus, .j-select:focus, .j-textarea:focus { border-color: var(--gold); }
+  .j-textarea { min-height: 70px; resize: vertical; }
+  .j-select option { background: var(--surface2); }
+  .save-btn {
+    background: var(--flame);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    align-self: flex-start;
+  }
+  .save-btn:hover { background: var(--ember); }
+  .journal-entries { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .journal-entry {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+  .je-header { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .je-type { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.08em; }
+  .je-date { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text3); }
+  .je-prices { color: var(--text2); margin-bottom: 4px; }
+  .je-note { color: var(--text3); font-style: italic; font-size: 12px; }
+
+  /* WELLBEING */
+  .mood-grid { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mood-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text2);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Crimson Pro', serif;
+  }
+  .mood-btn.selected { background: var(--surface3); border-color: var(--gold); color: var(--pale); }
+  .energy-slider { width: 100%; accent-color: var(--flame); margin: 8px 0; }
+  .energy-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); }
+  .ayur-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .ayur-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text2);
+  }
+  .ayur-pill.vata { border-color: rgba(100,181,246,0.4); color: var(--blue); }
+  .ayur-pill.kapha { border-color: rgba(76,175,80,0.4); color: var(--green); }
+  .wellbeing-note { width: 100%; }
+
+  /* AI TABS */
+  .ai-section { display: flex; flex-direction: column; gap: 14px; }
+  .ai-prompt-area {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .ai-context-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .ctx-pill {
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text3);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2px 8px;
+  }
+  .generate-btn {
+    width: 100%;
+    background: linear-gradient(135deg, var(--ember), var(--flame));
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    margin-top: 10px;
+  }
+  .generate-btn:hover { opacity: 0.9; }
+  .generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .ai-output {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+    min-height: 80px;
+    white-space: pre-wrap;
+    font-style: italic;
+  }
+  .ai-output.loading { color: var(--text3); font-style: normal; }
+  .ai-output em { font-style: normal; color: var(--gold); }
+
+  /* CHAT */
+  .chat-messages {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    min-height: 300px;
+    max-height: 420px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .chat-msg { display: flex; flex-direction: column; gap: 4px; }
+  .msg-role {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .msg-role.user { color: var(--flame); }
+  .msg-role.ai { color: var(--gold); }
+  .msg-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text);
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 10px 14px;
+  }
+  .msg-text.user-msg { background: var(--surface3); }
+  .chat-input-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Crimson Pro', serif;
+    font-size: 15px;
+    padding: 10px 14px;
+    outline: none;
+    resize: none;
+    min-height: 44px;
+    max-height: 120px;
+  }
+  .chat-input:focus { border-color: var(--gold); }
+  .send-btn {
+    background: var(--flame);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .send-btn:hover { background: var(--ember); }
+  .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* TRANSIT SECTION */
+  .transit-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .transit-chip {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--text2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .transit-chip.active { border-color: var(--gold); color: var(--gold); }
+
+  /* PRACTICE LOG */
+  .practice-checks { display: flex; flex-direction: column; gap: 8px; }
+  .practice-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .pcheck {
+    width: 20px; height: 20px;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .pcheck.done { background: var(--flame); border-color: var(--flame); }
+  .practice-item-name { font-size: 14px; color: var(--text2); }
+  .practice-item-name.done { color: var(--text); text-decoration: line-through; text-decoration-color: var(--text3); }
+
+  /* EMPTY STATES */
+  .empty-state { text-align: center; padding: 30px; color: var(--text3); font-style: italic; font-size: 14px; }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+  /* SIGNAL BANNER */
+  .signal-banner {
+    background: linear-gradient(135deg, rgba(232,84,26,0.15), rgba(212,160,23,0.1));
+    border: 1px solid rgba(212,160,23,0.3);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--pale);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .signal-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  @media (max-width: 480px) {
+    .panel { padding: 14px; }
+    .logo-tagline { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="logo-row">
+    <!-- 3Soul Logo -->
+    <svg class="logo-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="18" r="9" stroke="#D4A017" stroke-width="1.2" fill="none" opacity="0.7"/>
+      <circle cx="26" cy="18" r="9" stroke="#D4A017" stroke-width="1.2" fill="none" opacity="0.7"/>
+      <circle cx="20" cy="26" r="9" stroke="#D4A017" stroke-width="1.2" fill="none" opacity="0.7"/>
+      <polygon points="20,10 15,20 25,20" fill="#E8541A" opacity="0.9"/>
+      <circle cx="20" cy="19" r="2.5" fill="#F5E4A0"/>
+    </svg>
+    <span class="logo-name">3Soul™</span>
+    <span class="logo-tagline">Ancient Wisdom · Modern Soul</span>
+    <span class="date-pill" id="datePill">—</span>
+  </div>
+  <nav class="tab-bar">
+    <button class="tab-btn active" onclick="showTab('soul')">Soul</button>
+    <button class="tab-btn" onclick="showTab('gold')">Gold</button>
+    <button class="tab-btn" onclick="showTab('wellbeing')">Wellbeing</button>
+    <button class="tab-btn" onclick="showTab('reading')">Reading</button>
+    <button class="tab-btn" onclick="showTab('chat')">Chat</button>
+  </nav>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════ SOUL TAB -->
+<section class="panel active" id="tab-soul">
+
+  <div class="signal-banner">
+    <span class="signal-icon">☽</span>
+    <span id="dailySignal">Loading today's planetary signal…</span>
+  </div>
+
+  <!-- MANTRA TRACKER -->
+  <div class="card">
+    <div class="card-title">Mantra Practice</div>
+    <div class="mantra-grid" id="mantraGrid"></div>
+  </div>
+
+  <!-- PRACTICE CHECKLIST -->
+  <div class="card">
+    <div class="card-title">Daily Practice</div>
+    <div class="practice-checks" id="practiceChecks"></div>
+  </div>
+
+  <!-- HORA TABLE -->
+  <div class="card">
+    <div class="card-title">Planetary Hora · Today</div>
+    <div style="overflow-x:auto">
+      <table class="hora-table">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Planet</th>
+            <th>Quality</th>
+          </tr>
+        </thead>
+        <tbody id="horaBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TRANSITS -->
+  <div class="card">
+    <div class="card-title">Active Transits</div>
+    <div class="transit-row">
+      <span class="transit-chip active">Saturn → 3H Pisces</span>
+      <span class="transit-chip active">Jupiter → Cancer Jun 2026</span>
+      <span class="transit-chip active">Rahu → Cap Nov 2026</span>
+      <span class="transit-chip">Sadhesati ending</span>
+    </div>
+    <p style="font-size:13px; color:var(--text3); margin-top:10px; font-style:italic;">Saturn activating natal stellium (Mars/Jupiter/Saturn/Sun/Venus in Pisces). Long blockage cycle dissipating.</p>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ GOLD TAB -->
+<section class="panel" id="tab-gold">
+
+  <!-- SIGNAL -->
+  <div class="signal-banner">
+    <span class="signal-icon">◈</span>
+    <span>War-pattern system: Pre-war rally = entry · War spike = exit · Correction = reload. Apr–May: accumulate phase.</span>
+  </div>
+
+  <!-- KEY LEVELS -->
+  <div class="card">
+    <div class="card-title">XAUUSD Key Levels</div>
+    <div class="gold-ladder" id="goldLadder"></div>
+  </div>
+
+  <!-- ASTROLOGICAL CALENDAR -->
+  <div class="card">
+    <div class="card-title">Astro Trade Calendar 2026</div>
+    <div style="display:flex; flex-direction:column; gap:8px; font-size:13px;">
+      <div style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); min-width:70px;">Apr–May</span>
+        <span style="color:var(--text2);">Accumulate · Jupiter moving toward Cancer</span>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); min-width:70px;">Jun–Jul</span>
+        <span style="color:var(--text2);">Jupiter enters Cancer · historically gold surges</span>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start; padding:8px 0; border-bottom:1px solid var(--border);">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--flame); min-width:70px;">Aug 12</span>
+        <span style="color:var(--text2);">Total Solar Eclipse Leo · max volatility window</span>
+      </div>
+      <div style="display:flex; gap:12px; align-items:flex-start; padding:8px 0;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--gold); min-width:70px;">Oct</span>
+        <span style="color:var(--text2);">Venus retrograde Scorpio · physical gold surge</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRADE JOURNAL -->
+  <div class="card">
+    <div class="card-title">Trade Journal</div>
+    <div class="journal-form">
+      <div class="j-row">
+        <div class="j-field">
+          <label class="j-label">Type</label>
+          <select class="j-select" id="jType">
+            <option>Pre-war entry</option>
+            <option>War spike exit</option>
+            <option>Correction reload</option>
+            <option>Observation</option>
+          </select>
+        </div>
+        <div class="j-field">
+          <label class="j-label">Entry $</label>
+          <input class="j-input" id="jEntry" type="number" placeholder="4250">
+        </div>
+        <div class="j-field">
+          <label class="j-label">Exit $</label>
+          <input class="j-input" id="jExit" type="number" placeholder="4818">
+        </div>
+      </div>
+      <div class="j-field">
+        <label class="j-label">Notes</label>
+        <textarea class="j-textarea" id="jNote" placeholder="War pattern signal, astro timing, reasoning…"></textarea>
+      </div>
+      <button class="save-btn" onclick="saveJournalEntry()">Log Trade</button>
+    </div>
+    <div class="journal-entries" id="journalEntries">
+      <div class="empty-state">No trades logged yet</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ WELLBEING TAB -->
+<section class="panel" id="tab-wellbeing">
+
+  <!-- CONSTITUTION -->
+  <div class="card">
+    <div class="card-title">Constitution · Prakriti</div>
+    <div class="ayur-pills">
+      <span class="ayur-pill vata">Vata</span>
+      <span class="ayur-pill kapha">Kapha</span>
+    </div>
+    <p style="font-size:13px; color:var(--text3); margin-top:10px; font-style:italic;">Vata-Kapha constitution. Warm, grounding, and nourishing foods. Avoid cold, raw, and damp.</p>
+  </div>
+
+  <!-- DAILY LOG -->
+  <div class="card">
+    <div class="card-title">Today's Wellbeing Log</div>
+
+    <div style="margin-bottom:14px;">
+      <div class="j-label" style="margin-bottom:8px;">Mood</div>
+      <div class="mood-grid" id="moodGrid"></div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <div class="j-label" style="margin-bottom:4px;">Energy Level</div>
+      <input type="range" class="energy-slider" id="energySlider" min="1" max="10" value="5">
+      <div class="energy-labels">
+        <span>Depleted</span>
+        <span id="energyVal">5 / 10</span>
+        <span>Vibrant</span>
+      </div>
+    </div>
+
+    <div style="margin-bottom:14px;">
+      <div class="j-label" style="margin-bottom:8px;">Body Signals</div>
+      <div class="mood-grid" id="bodyGrid"></div>
+    </div>
+
+    <div class="j-field">
+      <label class="j-label">Morning Stack</label>
+      <div class="ayur-pills" style="margin-top:6px;">
+        <span class="ayur-pill">Warm lemon water</span>
+        <span class="ayur-pill">Kelp</span>
+        <span class="ayur-pill">Turmeric</span>
+        <span class="ayur-pill">Shilajit</span>
+      </div>
+    </div>
+
+    <div class="j-field" style="margin-top:12px;">
+      <label class="j-label">Notes</label>
+      <textarea class="j-textarea wellbeing-note" id="wellbeingNote" placeholder="How's the body today? Sleep, digestion, energy, spirit…"></textarea>
+    </div>
+
+    <button class="save-btn" style="margin-top:10px;" onclick="saveWellbeing()">Save Log</button>
+  </div>
+
+  <!-- AYURVEDIC GUIDANCE -->
+  <div class="card">
+    <div class="card-title">Ayurvedic Day Guidance</div>
+    <div id="ayurGuidance" style="font-size:14px; color:var(--text2); line-height:1.8;"></div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ READING TAB -->
+<section class="panel" id="tab-reading">
+  <div class="ai-section">
+    <div class="ai-prompt-area">
+      <div class="card-title" style="margin-bottom:10px;">Daily Reading Generator</div>
+      <div class="ai-context-pills">
+        <span class="ctx-pill">Pisces Sun · Cap Lagna</span>
+        <span class="ctx-pill">Cap Moon 1H</span>
+        <span class="ctx-pill">Pisces Stellium 3H</span>
+        <span class="ctx-pill">Vata-Kapha</span>
+        <span class="ctx-pill">Saturn 3H active</span>
+        <span class="ctx-pill">Sadhesati ending</span>
+        <span class="ctx-pill">21-day Tarpana</span>
+      </div>
+      <p style="font-size:13px; color:var(--text3); margin-bottom:12px; font-style:italic;">Your full natal context is pre-loaded. One tap generates a personalised reading for today.</p>
+      <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:10px;">
+        <label style="font-size:12px; color:var(--text3);">Focus:</label>
+        <select class="j-select" id="readingFocus" style="font-size:13px; padding:4px 10px;">
+          <option value="full">Full daily reading</option>
+          <option value="vedic">Vedic & transits only</option>
+          <option value="gold">Gold & abundance</option>
+          <option value="ancestral">Ancestral & healing</option>
+          <option value="practice">Practice & mantra</option>
+        </select>
+      </div>
+      <button class="generate-btn" id="generateBtn" onclick="generateReading()">✦ Generate Today's Reading</button>
+    </div>
+    <div class="ai-output loading" id="readingOutput">Your reading will appear here…</div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ CHAT TAB -->
+<section class="panel" id="tab-chat">
+  <div class="ai-section">
+    <div style="font-size:13px; color:var(--text3); font-style:italic; margin-bottom:10px; padding:0 2px;">
+      Your chart, constitution, practice stack, and gold framework are pre-loaded. Ask anything.
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="chat-msg">
+        <div class="msg-role ai">3Soul</div>
+        <div class="msg-text">Namaste, Dan. I hold your full chart — Capricorn Lagna, Moon in Cap 1H, the Pisces stellium in 3H, your Vata-Kapha nature, and the gold framework. Ask me anything — transits, practice, Ayurveda, gold timing, or whatever is alive for you today.</div>
+      </div>
+    </div>
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chatInput" placeholder="Ask about transits, practice, gold timing…" rows="1" onkeydown="chatKeyDown(event)"></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendChat()">↑</button>
+    </div>
+  </div>
+</section>
+
+<script>
+const PROXY = 'https://3soul-proxy.333frx.workers.dev/';
+
+// ── DATE ──────────────────────────────────────────────────────────────
+const today = new Date();
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+document.getElementById('datePill').textContent =
+  `${days[today.getDay()]} ${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}`;
+
+// ── TAB NAVIGATION ────────────────────────────────────────────────────
+function showTab(name) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ── DAILY SIGNAL ──────────────────────────────────────────────────────
+const daySignals = {
+  0: 'Sunday · Sun hora opens. Agni is strong. Ideal for Gayatri and solar sadhana.',
+  1: 'Monday · Moon rules today. Intuition heightened. Tarpana flows well.',
+  2: 'Tuesday · Mars energy. 3H Pisces stellium activates. Channel into discipline.',
+  3: 'Wednesday · Mercury day. Communication and study are favoured. Shatabhisha active.',
+  4: 'Thursday · Jupiter hora. Expansion and wisdom. Recite Om Namah Shivaya with intention.',
+  5: 'Friday · Venus day. Uttara Bhadrapada rises. Beauty, art, and devotional practice.',
+  6: 'Saturday · Saturn rules. Grounding work. Salt walk. Mahamrityunjaya for protection.'
+};
+document.getElementById('dailySignal').textContent = daySignals[today.getDay()];
+
+// ── MANTRA TRACKER ────────────────────────────────────────────────────
+const mantras = [
+  { id: 'gayatri', name: 'Gayatri Mantra', sub: 'Morning · Solar', target: 108 },
+  { id: 'shiva', name: 'Om Namah Shivaya', sub: 'Evening · Shiva', target: 108 },
+  { id: 'pitru', name: 'Pitru Dosha Nivarana', sub: 'Ancestral · 21-day cycle', target: 108 },
+  { id: 'mrityunjaya', name: 'Mahamrityunjaya', sub: 'Saturday protection', target: 108 },
+];
+const todayKey = `mantras_${today.toDateString()}`;
+let mantraCounts = JSON.parse(localStorage.getItem(todayKey) || '{}');
+
+function renderMantras() {
+  const grid = document.getElementById('mantraGrid');
+  grid.innerHTML = mantras.map(m => {
+    const count = mantraCounts[m.id] || 0;
+    const pct = Math.min(100, Math.round(count / m.target * 100));
+    const done = count >= m.target;
+    return `
+    <div>
+      <div class="mantra-row">
+        <div class="mantra-name">
+          ${m.name}<br><span class="mantra-sub">${m.sub}</span>
+        </div>
+        <div class="mantra-counter">
+          <button class="cnt-btn" onclick="changeMantra('${m.id}',-1)">−</button>
+          <div>
+            <div class="cnt-display">${count}</div>
+            <div class="cnt-target">/ ${m.target}</div>
+          </div>
+          <button class="cnt-btn" onclick="changeMantra('${m.id}',1)">+</button>
+          <span class="complete-badge ${done ? 'show' : ''}">✓</span>
+        </div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+function changeMantra(id, delta) {
+  mantraCounts[id] = Math.max(0, (mantraCounts[id] || 0) + delta);
+  localStorage.setItem(todayKey, JSON.stringify(mantraCounts));
+  renderMantras();
+}
+renderMantras();
+
+// ── PRACTICE CHECKLIST ────────────────────────────────────────────────
+const practices = [
+  'Aura sealing',
+  'Warm lemon water + morning stack',
+  'Gayatri ×108',
+  'Tarpana offering',
+  'Om Namah Shivaya ×108',
+  'Evening grounding',
+];
+const practiceKey = `practice_${today.toDateString()}`;
+let practiceState = JSON.parse(localStorage.getItem(practiceKey) || '{}');
+
+function renderPractices() {
+  document.getElementById('practiceChecks').innerHTML = practices.map((p, i) => {
+    const done = practiceState[i];
+    return `<div class="practice-item" onclick="togglePractice(${i})">
+      <div class="pcheck ${done ? 'done' : ''}">${done ? '✓' : ''}</div>
+      <span class="practice-item-name ${done ? 'done' : ''}">${p}</span>
+    </div>`;
+  }).join('');
+}
+function togglePractice(i) {
+  practiceState[i] = !practiceState[i];
+  localStorage.setItem(practiceKey, JSON.stringify(practiceState));
+  renderPractices();
+}
+renderPractices();
+
+// ── HORA TABLE ────────────────────────────────────────────────────────
+const planetColors = {
+  Sun: '#FFD54F', Moon: '#B0BEC5', Mars: '#EF5350',
+  Mercury: '#66BB6A', Jupiter: '#FFA726', Venus: '#F06292', Saturn: '#78909C'
+};
+const planetQualities = {
+  Sun: 'Authority, vitality, leadership',
+  Moon: 'Intuition, nurture, flow',
+  Mars: 'Action, discipline, courage',
+  Mercury: 'Study, communication, trade',
+  Jupiter: 'Wisdom, expansion, blessing',
+  Venus: 'Beauty, devotion, abundance',
+  Saturn: 'Structure, karma, endurance'
+};
+const horaOrder = {
+  0: ['Sun','Venus','Mercury','Moon','Saturn','Jupiter','Mars'],
+  1: ['Moon','Saturn','Jupiter','Mars','Sun','Venus','Mercury'],
+  2: ['Mars','Sun','Venus','Mercury','Moon','Saturn','Jupiter'],
+  3: ['Mercury','Moon','Saturn','Jupiter','Mars','Sun','Venus'],
+  4: ['Jupiter','Mars','Sun','Venus','Mercury','Moon','Saturn'],
+  5: ['Venus','Mercury','Moon','Saturn','Jupiter','Mars','Sun'],
+  6: ['Saturn','Jupiter','Mars','Sun','Venus','Mercury','Moon'],
+};
+function buildHoraTable() {
+  const dow = today.getDay();
+  const seq = horaOrder[dow];
+  const tbody = document.getElementById('horaBody');
+  const sunrise = 6; // approximate
+  const nowHour = today.getHours();
+  let html = '';
+  for (let h = 0; h < 12; h++) {
+    const hour = (sunrise + h) % 24;
+    const next = (hour + 1) % 24;
+    const planet = seq[h % 7];
+    const isCurrent = nowHour === hour;
+    const label = `${String(hour).padStart(2,'0')}:00–${String(next).padStart(2,'0')}:00`;
+    const col = planetColors[planet] || '#fff';
+    html += `<tr ${isCurrent ? 'class="current-hora"' : ''}>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3)">${label}</td>
+      <td><span class="planet-dot" style="background:${col}"></span>${planet}</td>
+      <td style="color:var(--text3);font-size:12px">${planetQualities[planet]}</td>
+    </tr>`;
+  }
+  tbody.innerHTML = html;
+}
+buildHoraTable();
+
+// ── GOLD LEVELS ────────────────────────────────────────────────────────
+const goldLevels = [
+  { price: 5595, label: 'All-Time High', action: 'sell', cls: 'action-sell' },
+  { price: 4818, label: 'Key Resistance', action: 'exit zone', cls: 'action-sell' },
+  { price: 4230, label: '200 EMA · Bull/Bear Line', action: 'watch', cls: 'action-watch' },
+  { price: 4114, label: 'Critical Support', action: 'watch', cls: 'action-watch' },
+  { price: 3500, label: 'Bear Market Level', action: 'reload', cls: 'action-buy' },
+];
+document.getElementById('goldLadder').innerHTML = goldLevels.map(l =>
+  `<div class="gold-level">
+    <span class="level-price" style="color:${l.cls.includes('sell') ? 'var(--red)' : l.cls.includes('buy') ? 'var(--green)' : 'var(--gold)'}">$${l.price.toLocaleString()}</span>
+    <span class="level-label">${l.label}</span>
+    <span class="level-action ${l.cls}">${l.action}</span>
+  </div>`
+).join('');
+
+// ── TRADE JOURNAL ─────────────────────────────────────────────────────
+const journalKey = 'goldJournal';
+let journal = JSON.parse(localStorage.getItem(journalKey) || '[]');
+
+function renderJournal() {
+  const el = document.getElementById('journalEntries');
+  if (!journal.length) { el.innerHTML = '<div class="empty-state">No trades logged yet</div>'; return; }
+  el.innerHTML = journal.slice().reverse().map(e => `
+    <div class="journal-entry">
+      <div class="je-header">
+        <span class="je-type" style="color:var(--gold)">${e.type}</span>
+        <span class="je-date">${e.date}</span>
+      </div>
+      ${e.entry || e.exit ? `<div class="je-prices">Entry: $${e.entry||'—'} · Exit: $${e.exit||'—'}</div>` : ''}
+      ${e.note ? `<div class="je-note">${e.note}</div>` : ''}
+    </div>`).join('');
+}
+function saveJournalEntry() {
+  const entry = {
+    type: document.getElementById('jType').value,
+    entry: document.getElementById('jEntry').value,
+    exit: document.getElementById('jExit').value,
+    note: document.getElementById('jNote').value,
+    date: today.toLocaleDateString('en-GB')
+  };
+  journal.push(entry);
+  localStorage.setItem(journalKey, JSON.stringify(journal));
+  document.getElementById('jEntry').value = '';
+  document.getElementById('jExit').value = '';
+  document.getElementById('jNote').value = '';
+  renderJournal();
+}
+renderJournal();
+
+// ── WELLBEING ─────────────────────────────────────────────────────────
+const moods = ['Peaceful','Clear','Grounded','Expansive','Tired','Anxious','Heavy','Inspired'];
+const bodySignals = ['Light','Energised','Stiff','Bloated','Warm','Cold','Headache','Balanced'];
+const wbKey = `wellbeing_${today.toDateString()}`;
+let wbState = JSON.parse(localStorage.getItem(wbKey) || '{"moods":[],"body":[],"energy":5}');
+
+function renderMoodGrid() {
+  document.getElementById('moodGrid').innerHTML = moods.map(m =>
+    `<button class="mood-btn ${wbState.moods.includes(m) ? 'selected' : ''}" onclick="toggleMood('${m}')">${m}</button>`
+  ).join('');
+  document.getElementById('bodyGrid').innerHTML = bodySignals.map(b =>
+    `<button class="mood-btn ${wbState.body.includes(b) ? 'selected' : ''}" onclick="toggleBody('${b}')">${b}</button>`
+  ).join('');
+}
+function toggleMood(m) {
+  wbState.moods = wbState.moods.includes(m) ? wbState.moods.filter(x=>x!==m) : [...wbState.moods, m];
+  renderMoodGrid();
+}
+function toggleBody(b) {
+  wbState.body = wbState.body.includes(b) ? wbState.body.filter(x=>x!==b) : [...wbState.body, b];
+  renderMoodGrid();
+}
+function saveWellbeing() {
+  wbState.energy = document.getElementById('energySlider').value;
+  wbState.note = document.getElementById('wellbeingNote').value;
+  localStorage.setItem(wbKey, JSON.stringify(wbState));
+  const btn = event.target;
+  btn.textContent = 'Saved ✓';
+  setTimeout(() => btn.textContent = 'Save Log', 2000);
+}
+document.getElementById('energySlider').value = wbState.energy || 5;
+document.getElementById('energySlider').oninput = function() {
+  document.getElementById('energyVal').textContent = this.value + ' / 10';
+  wbState.energy = this.value;
+};
+document.getElementById('energyVal').textContent = (wbState.energy || 5) + ' / 10';
+renderMoodGrid();
+
+// AYURVEDIC GUIDANCE
+const ayurDay = {
+  0: 'Sunday: Sun day. Favour warming foods — ginger rice, sesame. Light on the system. Agni is strong; this is a day for clarity and fasting if guided.',
+  1: 'Monday: Moon day. Nourishing, moist foods. Warm milk with ashwagandha. Avoid cold and raw. Emotions may be close to the surface — honour them.',
+  2: 'Tuesday: Mars day. Energising foods. Spiced lentils, root vegetables. Channel physical energy intentionally. Pitta rises — stay grounded.',
+  3: 'Wednesday: Mercury day. Light, easily digestible foods. Favour greens, mung dal. Mental clarity is available — study and writing are supported.',
+  4: 'Thursday: Jupiter day. Generous and nourishing. Yellow dal, ghee, turmeric. A day to give and receive. Kapha is elevated — keep the body moving.',
+  5: 'Friday: Venus day. Beauty in food. Dates, figs, coconut, rose water. Sweetness is medicine today. Light cooking, gentle eating.',
+  6: 'Saturday: Saturn day. Grounding and purifying. Dark lentils, sesame oil, roots. Favour a simpler meal. Service and stillness are key.',
+};
+document.getElementById('ayurGuidance').textContent = ayurDay[today.getDay()];
+
+// ── NATAL CONTEXT STRING ───────────────────────────────────────────────
+const NATAL_CONTEXT = `
+Dan's full natal chart:
+- Ascendant: Capricorn (Uttara Ashadha nakshatra)
+- Moon: Capricorn, 1st House (Sravana nakshatra)
+- Sun + Venus: Pisces, 3rd House (Uttara Bhadrapada)
+- Mars + Jupiter + Saturn: Pisces, 3rd House (Revati) — powerful stellium
+- Mercury: Aquarius, 2nd House (Shatabhisha)
+- Rahu: Leo, 8th House (Magha)
+- Ketu: Aquarius, 2nd House (Dhanishtha)
+- Constitution: Vata-Kapha
+- Soul archetype: threshold keeper, ancestral liberator
+- Current cycle: Sadhesati (7.5yr Saturn period) ending. Saturn now in 3H Pisces activating natal stellium. Jupiter enters Cancer June 2026. Rahu shifts to Capricorn November 2026.
+- Active practice: 21-day Pitru Dosha Tarpana cycle, Gayatri ×108 morning, Om Namah Shivaya ×108 evening, Mahamrityunjaya Saturdays
+- Gold framework: war-pattern system. Apr-May accumulate. Jun-Jul Jupiter surge. Aug 12 eclipse volatility. Oct Venus retro physical gold surge.
+- Today: ${days[today.getDay()]}, ${today.getDate()} ${months[today.getMonth()]} ${today.getFullYear()}
+`.trim();
+
+// ── READING GENERATOR ─────────────────────────────────────────────────
+async function generateReading() {
+  const btn = document.getElementById('generateBtn');
+  const out = document.getElementById('readingOutput');
+  const focus = document.getElementById('readingFocus').value;
+  btn.disabled = true;
+  out.classList.add('loading');
+  out.textContent = 'Consulting the stars…';
+
+  const focusMap = {
+    full: 'Write a full personalised daily reading covering: Vedic astrology & transits, Ayurvedic guidance for today, ancestral/spiritual layer, gold & abundance, and practice recommendations.',
+    vedic: 'Write a detailed Vedic astrology and transit reading for today, focusing on the natal chart and current planetary positions.',
+    gold: 'Write a reading focused on gold, abundance, and financial timing using the Jyotish and war-pattern frameworks.',
+    ancestral: 'Write a deep ancestral and healing reading, touching on the Pitru Dosha cycle, lineage clearing, and spiritual practice.',
+    practice: 'Write a personalised practice and mantra recommendation for today, linked to planetary hora and the natal chart.'
+  };
+
+  const prompt = `${NATAL_CONTEXT}\n\n${focusMap[focus]}\n\nWrite in a warm, poetic, and precise tone. Use section headings. Be specific to the natal chart details and today's date.`;
+
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        messages: [{ role: 'user', content: prompt }]
+      })
+    });
+    const data = await res.json();
+    const text = data.content?.map(b => b.text || '').join('') || 'No reading generated.';
+    out.classList.remove('loading');
+    out.textContent = text;
+  } catch(e) {
+    out.classList.remove('loading');
+    out.textContent = 'Connection error. Check your Cloudflare proxy is running.';
+  }
+  btn.disabled = false;
+}
+
+// ── CHAT ──────────────────────────────────────────────────────────────
+let chatHistory = [];
+const CHAT_SYSTEM = `You are 3Soul, Dan's personal Vedic astrology, Ayurveda, and spiritual intelligence. You know his full natal chart and context intimately:\n\n${NATAL_CONTEXT}\n\nSpeak with warmth, precision, and depth. You are not a generic AI — you are his dedicated guide. Reference his chart details specifically when relevant. Keep responses concise unless asked for depth.`;
+
+function appendMsg(role, text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg';
+  div.innerHTML = `<div class="msg-role ${role === 'user' ? 'user' : 'ai'}">${role === 'user' ? 'Dan' : '3Soul'}</div>
+    <div class="msg-text ${role === 'user' ? 'user-msg' : ''}">${text}</div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  appendMsg('user', text);
+  chatHistory.push({ role: 'user', content: text });
+  sendBtn.disabled = true;
+
+  const thinkingDiv = document.createElement('div');
+  thinkingDiv.className = 'chat-msg';
+  thinkingDiv.innerHTML = `<div class="msg-role ai">3Soul</div><div class="msg-text" style="color:var(--text3);font-style:italic">Contemplating…</div>`;
+  document.getElementById('chatMessages').appendChild(thinkingDiv);
+  document.getElementById('chatMessages').scrollTop = 99999;
+
+  try {
+    const res = await fetch(PROXY, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: CHAT_SYSTEM,
+        messages: chatHistory
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.map(b => b.text || '').join('') || 'No response.';
+    chatHistory.push({ role: 'assistant', content: reply });
+    thinkingDiv.remove();
+    appendMsg('ai', reply);
+  } catch(e) {
+    thinkingDiv.remove();
+    appendMsg('ai', 'Connection error. Check your Cloudflare proxy.');
+  }
+  sendBtn.disabled = false;
+}
+
+function chatKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChat(); }
+}
+</script>
+</body>
+</html>
